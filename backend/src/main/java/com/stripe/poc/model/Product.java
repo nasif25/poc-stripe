@@ -27,6 +27,9 @@ public class Product {
     
     @JsonProperty("features")
     private String[] features;
+    
+    @JsonProperty("stripePriceId")
+    private String stripePriceId;
 
     // Constructors
     public Product() {}
@@ -40,6 +43,18 @@ public class Product {
         this.currency = currency;
         this.users = users;
         this.features = features;
+    }
+
+    public Product(String id, String name, String description, Long price, 
+                   String currency, Integer users, String[] features, String stripePriceId) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.currency = currency;
+        this.users = users;
+        this.features = features;
+        this.stripePriceId = stripePriceId;
     }
 
     // Getters and Setters
@@ -63,6 +78,9 @@ public class Product {
 
     public String[] getFeatures() { return features; }
     public void setFeatures(String[] features) { this.features = features; }
+
+    public String getStripePriceId() { return stripePriceId; }
+    public void setStripePriceId(String stripePriceId) { this.stripePriceId = stripePriceId; }
 
     @Override
     public String toString() {

@@ -6,5 +6,6 @@ export interface Product {
   currency: string;
   users: number;
   features: string[];
+  stripePriceId: string; // Stripe Price ID for checkout
 }
 

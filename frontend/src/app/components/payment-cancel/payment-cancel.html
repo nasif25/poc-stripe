@@ -1,0 +1,33 @@
+<div class="cancel-container">
+  <div class="cancel-content">
+    <div class="cancel-icon">
+      <i class="material-icons">cancel</i>
+    </div>
+    
+    <h1>Payment Cancelled</h1>
+    <p class="cancel-message">
+      Your payment was cancelled. No charges have been made to your account.
+    </p>
+    
+    <div class="common-reasons">
+      <h3>Common reasons for cancellation:</h3>
+      <ul>
+        <li>You clicked the back button during checkout</li>
+        <li>You closed the browser window</li>
+        <li>You decided not to complete the purchase</li>
+        <li>There was a technical issue</li>
+      </ul>
+    </div>
+    
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="tryAgain()">
+        <i class="material-icons">refresh</i>
+        Try Again
+      </button>
+      <button mat-button (click)="goToProducts()">
+        <i class="material-icons">arrow_back</i>
+        Back to Plans
+      </button>
+    </div>
+  </div>
+</div>

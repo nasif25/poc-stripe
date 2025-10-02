@@ -1,1 +1,57 @@
-<p>payment-success works!</p>
+<div class="success-container">
+  <div class="success-content">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-section">
+      <mat-spinner diameter="60"></mat-spinner>
+      <p>Verifying your payment...</p>
+    </div>
+    
+    <!-- Success Content -->
+    <div *ngIf="!loading">
+      <div class="success-icon">
+        <i class="material-icons">check_circle</i>
+      </div>
+      
+      <h1>Payment Successful!</h1>
+      <p class="success-message">
+        Thank you for your purchase. Your payment has been processed successfully.
+      </p>
+      
+      <div *ngIf="sessionDetails" class="order-details">
+        <h3>Order Details</h3>
+        <div class="detail-row">
+          <span class="label">Status:</span>
+          <span class="value status-complete">{{ sessionDetails.status | titlecase }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Payment Status:</span>
+          <span class="value status-paid">{{ sessionDetails.paymentStatus | titlecase }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Amount:</span>
+          <span class="value amount">${{ (sessionDetails.amountTotal / 100).toFixed(2) }} {{ sessionDetails.currency?.toUpperCase() }}</span>
+        </div>
+        <div *ngIf="sessionDetails.customerEmail" class="detail-row">
+          <span class="label">Email:</span>
+          <span class="value">{{ sessionDetails.customerEmail }}</span>
+        </div>
+      </div>
+      
+      <div class="next-steps">
+        <h3>What's Next?</h3>
+        <ul>
+          <li>You will receive a confirmation email shortly</li>
+          <li>Your account will be activated within 24 hours</li>
+          <li>Our team will contact you for onboarding</li>
+        </ul>
+      </div>
+      
+      <div class="actions">
+        <button mat-raised-button color="primary" (click)="goToProducts()">
+          <i class="material-icons">arrow_back</i>
+          Back to Plans
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

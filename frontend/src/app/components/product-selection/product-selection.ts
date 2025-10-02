@@ -5,8 +5,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from '../../services/api';
 import { Product } from '../../models/product.model';
+import { CheckoutRequest } from '../../models/checkout.model';
 
 @Component({
   selector: 'app-product-selection',
@@ -15,7 +17,8 @@ import { Product } from '../../models/product.model';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSnackBarModule
   ],
   templateUrl: './product-selection.html',
   styleUrl: './product-selection.scss'
@@ -24,10 +27,12 @@ export class ProductSelectionComponent implements OnInit {
   products: Product[] = [];
   loading = true;
   error: string | null = null;
+  processingProducts = new Set<string>();
 
   constructor(
     private apiService: ApiService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +57,39 @@ export class ProductSelectionComponent implements OnInit {
   }
 
   selectProduct(product: Product): void {
-    this.router.navigate(['/payment', product.id]);
+    this.processingProducts.add(product.id);
+    
+    // Create checkout request
+    const checkoutRequest: CheckoutRequest = {
+      priceId: product.stripePriceId,
+      customerEmail: 'customer@example.com', // You can add a simple email input later
+      customerName: 'Customer'
+    };
+    
+    this.apiService.createCheckoutSession(checkoutRequest).subscribe({
+      next: (response) => {
+        if (response.success) {
+          // Redirect to Stripe Checkout
+          window.location.href = response.checkoutUrl;
+        } else {
+          this.snackBar.open('Failed to create checkout session: ' + response.message, 'Close', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top'
+          });
+          this.processingProducts.delete(product.id);
+        }
+      },
+      error: (error) => {
+        console.error('Checkout error:', error);
+        this.snackBar.open('Error creating checkout session. Please try again.', 'Close', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        });
+        this.processingProducts.delete(product.id);
+      }
+    });
   }
 
   formatPrice(priceInCents: number): string {
@@ -77,6 +114,10 @@ export class ProductSelectionComponent implements OnInit {
       case 300: return 'primary';
       default: return 'primary';
     }
+  }
+
+  isProcessing(product: Product): boolean {
+    return this.processingProducts.has(product.id);
   }
 
   trackByProductId(index: number, product: Product): string {

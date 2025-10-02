@@ -1,17 +1,18 @@
-.failure-container {
+.cancel-container {
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: 70vh;
+  justify-content: center;
   padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-.failure-content {
+.cancel-content {
   max-width: 600px;
   text-align: center;
   color: white;
   
-  .failure-icon {
+  .cancel-icon {
     margin-bottom: 2rem;
     
     .material-icons {
@@ -27,79 +28,77 @@
   h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: #f44336;
-    font-weight: 700;
+    font-weight: 600;
   }
   
-  .failure-message {
+  .cancel-message {
     font-size: 1.2rem;
     margin-bottom: 2rem;
     opacity: 0.9;
-    line-height: 1.6;
   }
   
-  .common-issues {
+  .common-reasons {
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
     border-radius: 12px;
     padding: 1.5rem;
-    margin: 1.5rem 0;
+    margin-bottom: 2rem;
     text-align: left;
     
     h3 {
-      margin: 0 0 1rem 0;
-      color: #f44336;
+      margin-bottom: 1rem;
       font-size: 1.3rem;
     }
     
     ul {
-      margin: 0;
-      padding-left: 1.2rem;
+      list-style: none;
+      padding: 0;
       
       li {
-        margin: 0.5rem 0;
-        font-size: 1rem;
-        line-height: 1.5;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        &::before {
+          content: "•";
+          color: #f44336;
+          font-weight: bold;
+          margin-right: 0.5rem;
+        }
       }
     }
   }
   
   .actions {
-    margin-top: 2rem;
     display: flex;
     gap: 1rem;
     justify-content: center;
+    flex-wrap: wrap;
     
     button {
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
-      font-weight: 600;
+      min-width: 150px;
       
       .material-icons {
         margin-right: 0.5rem;
-        vertical-align: middle;
       }
     }
   }
 }
 
 @media (max-width: 768px) {
-  .failure-container {
+  .cancel-container {
     padding: 1rem;
   }
   
-  .failure-content {
-    .failure-icon .material-icons {
-      font-size: 4rem;
-      padding: 1.5rem;
-    }
-    
+  .cancel-content {
     h1 {
       font-size: 2rem;
     }
     
-    .failure-message {
-      font-size: 1.1rem;
+    .cancel-message {
+      font-size: 1rem;
     }
     
     .actions {

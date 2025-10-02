@@ -6,18 +6,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-payment-failure',
+  selector: 'app-payment-cancel',
   imports: [
     CommonModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule
   ],
-  templateUrl: './payment-failure.html',
-  styleUrl: './payment-failure.scss'
+  templateUrl: './payment-cancel.html',
+  styleUrl: './payment-cancel.scss'
 })
-export class PaymentFailureComponent {
-
+export class PaymentCancelComponent {
   constructor(private router: Router) {}
 
   goToProducts(): void {
@@ -25,6 +24,6 @@ export class PaymentFailureComponent {
   }
 
   tryAgain(): void {
-    window.history.back();
+    this.router.navigate(['/products']);
   }
 }

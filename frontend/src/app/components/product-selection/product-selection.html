@@ -68,17 +68,20 @@
       <mat-card-actions align="end">
         <button 
           mat-raised-button 
-          [color]="product.users === 100 ? 'accent' : 'primary'"
-          (click)="selectProduct(product)"
+          [color]="product.users === 100 ? 'accent' : 'primary'" 
+          [disabled]="isProcessing(product)"
+          (click)="selectProduct(product)" 
           class="select-plan-btn">
-          <i class="material-icons">payment</i>
-          Choose {{ product.name }}
+          <mat-spinner *ngIf="isProcessing(product)" diameter="20" class="button-spinner"></mat-spinner>
+          <i *ngIf="!isProcessing(product)" class="material-icons">payment</i>
+          {{ isProcessing(product) ? 'Processing...' : 'Choose ' + product.name }}
         </button>
       </mat-card-actions>
     </mat-card>
   </div>
 
-  <!-- Demo Info -->
+  <!-- Demo Info - Available for development/testing -->
+  <!--
   <div *ngIf="!loading && !error" class="demo-info">
     <mat-card class="info-card">
       <mat-card-content>
@@ -101,4 +104,5 @@
       </mat-card-content>
     </mat-card>
   </div>
+  -->
 </div>

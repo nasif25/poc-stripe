@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
 import { PaymentRequest, PaymentResponse, StripeConfig } from '../models/payment.model';
+import { CheckoutRequest, CheckoutResponse } from '../models/checkout.model';
 
 @Injectable({
   providedIn: 'root'
@@ -45,5 +46,19 @@ export class ApiService {
    */
   getStripeConfig(): Observable<StripeConfig> {
     return this.http.get<StripeConfig>(`${this.baseUrl}/config`);
+  }
+
+  /**
+   * Create a Stripe Checkout session
+   */
+  createCheckoutSession(checkoutRequest: CheckoutRequest): Observable<CheckoutResponse> {
+    return this.http.post<CheckoutResponse>(`${this.baseUrl}/create-checkout-session`, checkoutRequest);
+  }
+
+  /**
+   * Get checkout session details
+   */
+  getCheckoutSession(sessionId: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/checkout-session/${sessionId}`);
   }
 }

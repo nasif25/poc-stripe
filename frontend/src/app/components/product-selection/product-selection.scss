@@ -204,11 +204,21 @@
   font-size: 1.1rem;
   font-weight: 600;
   border-radius: 8px;
+  position: relative;
   
   .material-icons {
     margin-right: 0.5rem;
     font-size: 20px;
     vertical-align: middle;
+  }
+  
+  .button-spinner {
+    margin-right: 0.5rem;
+  }
+  
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
   }
 }
 

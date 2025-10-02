@@ -28,7 +28,7 @@ A professional proof-of-concept demonstrating Stripe payment integration with Ja
    ```bash
    cd frontend
    npm install
-   ng serve
+   npm start
    ```
 
 4. **Access Application**
@@ -55,10 +55,10 @@ A professional proof-of-concept demonstrating Stripe payment integration with Ja
 
 | Users | Monthly Price | Stripe Price ID |
 |-------|---------------|-----------------|
-| 50    | $50.00       | price_50_users  |
-| 100   | $90.00       | price_100_users |
-| 200   | $160.00      | price_200_users |
-| 300   | $220.00      | price_300_users |
+| 50    | $50.00       | price_starter    |
+| 100   | $90.00       | price_growth     |
+| 200   | $160.00      | price_professional|
+| ~~300~~ | ~~$220.00~~ | ~~price_enterprise~~ *(available for future expansion)* |
 
 ## 🧪 Test Cards
 

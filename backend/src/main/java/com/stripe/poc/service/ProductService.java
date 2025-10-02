@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * Service for managing product tiers and pricing
  * 
- * Handles the 4 pricing tiers: 50, 100, 200, 300 users
+ * Handles the pricing tiers: 50, 100, 200 users
  */
 @Service
 public class ProductService {
@@ -18,44 +18,52 @@ public class ProductService {
     private final List<Product> products;
 
     public ProductService() {
-        // Initialize the 4 pricing tiers as defined in requirements
+        // Initialize pricing tiers
+        // TODO: Replace placeholder Stripe Price IDs with actual ones from your Stripe dashboard
         this.products = Arrays.asList(
             new Product(
-                "price_50_users",
+                "price_starter",
                 "Starter Plan",
                 "Perfect for small teams getting started",
                 5000L, // $50.00 in cents
                 "usd",
                 50,
-                new String[]{"Up to 50 users", "Basic support", "Standard features", "Email integration"}
+                new String[]{"Up to 50 users", "Basic support", "Standard features", "Email integration"},
+                "price_1SDsuJHGTlSFVsTnGdfsf8hW" // TODO: Replace with actual Stripe Price ID from dashboard
             ),
             new Product(
-                "price_100_users", 
+                "price_growth", 
                 "Growth Plan",
                 "Ideal for growing teams and businesses",
                 9000L, // $90.00 in cents
                 "usd",
                 100,
-                new String[]{"Up to 100 users", "Priority support", "Advanced features", "API access", "Custom integrations"}
+                new String[]{"Up to 100 users", "Priority support", "Advanced features", "API access", "Custom integrations"},
+                "price_1SDsvdHGTlSFVsTnYdQ1iWoP" // TODO: Replace with actual Stripe Price ID from dashboard
             ),
             new Product(
-                "price_200_users",
+                "price_professional",
                 "Professional Plan", 
                 "For established teams requiring scale",
                 16000L, // $160.00 in cents
                 "usd",
                 200,
-                new String[]{"Up to 200 users", "Premium support", "All features", "Advanced analytics", "Custom branding", "SSO integration"}
-            ),
+                new String[]{"Up to 200 users", "Premium support", "All features", "Advanced analytics", "Custom branding", "SSO integration"},
+                "price_1SDsw5HGTlSFVsTnyWXNJc8S" // TODO: Replace with actual Stripe Price ID from dashboard
+            )
+            // Enterprise plan available for future expansion
+            /*
             new Product(
-                "price_300_users",
+                "price_enterprise",
                 "Enterprise Plan",
                 "Maximum capacity for large organizations", 
                 22000L, // $220.00 in cents
                 "usd",
                 300,
-                new String[]{"Up to 300 users", "24/7 dedicated support", "Enterprise features", "Advanced security", "Custom development", "SLA guarantee"}
+                new String[]{"Up to 300 users", "24/7 dedicated support", "Enterprise features", "Advanced security", "Custom development", "SLA guarantee"},
+                "price_1SDswRHGTlSFVsTnpFnD1rvX" // TODO: Replace with actual Stripe Price ID from dashboard
             )
+            */
         );
     }
 

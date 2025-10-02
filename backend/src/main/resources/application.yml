@@ -23,10 +23,10 @@ spring:
       allow-credentials: true
 
 # Stripe Configuration
+# The section after the colon is a fallback value if the environment variable is not set
 stripe:
-  secret-key: ${STRIPE_SECRET_KEY:sk_test_your_secret_key_here}
-  publishable-key: ${STRIPE_PUBLISHABLE_KEY:pk_test_your_publishable_key_here}
-  webhook-secret: ${STRIPE_WEBHOOK_SECRET:whsec_your_webhook_secret_here}
+  secret-key: ${STRIPE_SECRET_KEY:sk_test_your_actual_secret_key_here}  
+  publishable-key: ${STRIPE_PUBLISHABLE_KEY:pk_test_your_actual_publishable_key_here}
 
 # Logging
 logging:
