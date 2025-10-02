@@ -1,0 +1,43 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: stripe-poc-backend
+  
+  # CORS Configuration
+  web:
+    cors:
+      allowed-origins: 
+        - "http://localhost:4200"
+        - "http://127.0.0.1:4200"
+      allowed-methods: 
+        - GET
+        - POST
+        - PUT
+        - DELETE
+        - OPTIONS
+      allowed-headers: "*"
+      allow-credentials: true
+
+# Stripe Configuration
+stripe:
+  secret-key: ${STRIPE_SECRET_KEY:sk_test_your_secret_key_here}
+  publishable-key: ${STRIPE_PUBLISHABLE_KEY:pk_test_your_publishable_key_here}
+  webhook-secret: ${STRIPE_WEBHOOK_SECRET:whsec_your_webhook_secret_here}
+
+# Logging
+logging:
+  level:
+    com.stripe.poc: DEBUG
+    org.springframework.web: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# Application Configuration
+app:
+  frontend-url: ${FRONTEND_URL:http://localhost:4200}
+  success-url: ${SUCCESS_URL:http://localhost:4200/payment/success}
+  cancel-url: ${CANCEL_URL:http://localhost:4200/payment/cancel}
