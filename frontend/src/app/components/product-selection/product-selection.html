@@ -1,0 +1,104 @@
+<div class="product-selection-container">
+  <div class="header-section">
+    <h2>Choose Your Plan</h2>
+    <p>Select the perfect plan for your team size and needs</p>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Loading pricing plans...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <mat-icon color="warn">error</mat-icon>
+    <p>{{ error }}</p>
+    <button mat-raised-button color="primary" (click)="loadProducts()">
+      <mat-icon>refresh</mat-icon>
+      Try Again
+    </button>
+  </div>
+
+  <!-- Products Grid -->
+  <div *ngIf="!loading && !error" class="products-grid">
+    <mat-card 
+      *ngFor="let product of products; trackBy: trackByProductId" 
+      class="product-card"
+      [class.popular]="product.users === 100">
+      
+      <!-- Popular Badge -->
+      <div *ngIf="product.users === 100" class="popular-badge">
+        <mat-icon>star</mat-icon>
+        Most Popular
+      </div>
+
+      <mat-card-header>
+        <div mat-card-avatar class="plan-avatar">
+          <i class="material-icons">{{ getPlanIcon(product.users) }}</i>
+        </div>
+        <mat-card-title>{{ product.name }}</mat-card-title>
+        <mat-card-subtitle>{{ product.description }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="pricing-section">
+          <div class="price">
+            <span class="currency">$</span>
+            <span class="amount">{{ formatPrice(product.price) }}</span>
+            <span class="period">/month</span>
+          </div>
+          <div class="user-count">
+            <i class="material-icons">people</i>
+            Up to {{ product.users }} users
+          </div>
+        </div>
+
+        <div class="features-section">
+          <h4>Features included:</h4>
+          <ul class="features-list">
+            <li *ngFor="let feature of product.features">
+              <i class="material-icons check-icon">check_circle</i>
+              {{ feature }}
+            </li>
+          </ul>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button 
+          mat-raised-button 
+          [color]="product.users === 100 ? 'accent' : 'primary'"
+          (click)="selectProduct(product)"
+          class="select-plan-btn">
+          <i class="material-icons">payment</i>
+          Choose {{ product.name }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <!-- Demo Info -->
+  <div *ngIf="!loading && !error" class="demo-info">
+    <mat-card class="info-card">
+      <mat-card-content>
+        <div class="info-header">
+          <mat-icon color="accent">info</mat-icon>
+          <h3>Demo Information</h3>
+        </div>
+        <p>This is a demonstration of Stripe payment integration. Use these test cards:</p>
+        <div class="test-cards">
+          <div class="test-card">
+            <strong>Success:</strong> 4242 4242 4242 4242
+          </div>
+          <div class="test-card">
+            <strong>Decline:</strong> 4000 0000 0000 0002
+          </div>
+          <div class="test-card">
+            <strong>Authentication:</strong> 4000 0025 0000 3155
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
