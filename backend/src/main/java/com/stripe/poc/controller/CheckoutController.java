@@ -10,7 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -73,6 +76,71 @@ public class CheckoutController {
             Map<String, String> error = new HashMap<>();
             error.put("error", "Internal server error: " + e.getMessage());
             return ResponseEntity.internalServerError().body(error);
+        }
+    }
+    
+    /**
+     * Get all purchase sessions (admin)
+     * GET /api/purchases/sessions
+     */
+    @GetMapping("/purchases/sessions")
+    public ResponseEntity<?> getAllSessions() {
+        try {
+            List<Map<String, Object>> sessions = checkoutService.getAllSessions();
+            return ResponseEntity.ok(sessions);
+        } catch (StripeException e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Failed to retrieve sessions: " + e.getMessage());
+            return ResponseEntity.badRequest().body(error);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Internal server error: " + e.getMessage());
+            return ResponseEntity.internalServerError().body(error);
+        }
+    }
+    
+    /**
+     * Get sessions by customer email
+     * GET /api/purchases/sessions/customer/{email}
+     */
+    @GetMapping("/purchases/sessions/customer/{email}")
+    public ResponseEntity<?> getSessionsByCustomer(@PathVariable String email) {
+        try {
+            List<Map<String, Object>> sessions = checkoutService.getSessionsByCustomer(email);
+            return ResponseEntity.ok(sessions);
+        } catch (StripeException e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Failed to retrieve customer sessions: " + e.getMessage());
+            return ResponseEntity.badRequest().body(error);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Internal server error: " + e.getMessage());
+            return ResponseEntity.internalServerError().body(error);
+        }
+    }
+    
+    /**
+     * Get sessions by date range (admin)
+     * GET /api/purchases/sessions/date-range?start=2024-01-01&end=2024-12-31
+     */
+    @GetMapping("/purchases/sessions/date-range")
+    public ResponseEntity<?> getSessionsByDateRange(
+            @RequestParam String start,
+            @RequestParam String end) {
+        try {
+            // Convert date strings to timestamps
+            LocalDateTime startDate = LocalDateTime.parse(start + "T00:00:00");
+            LocalDateTime endDate = LocalDateTime.parse(end + "T23:59:59");
+            
+            Long startTimestamp = startDate.toEpochSecond(ZoneOffset.UTC);
+            Long endTimestamp = endDate.toEpochSecond(ZoneOffset.UTC);
+            
+            List<Map<String, Object>> sessions = checkoutService.getSessionsByDateRange(startTimestamp, endTimestamp);
+            return ResponseEntity.ok(sessions);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Failed to retrieve sessions by date range: " + e.getMessage());
+            return ResponseEntity.badRequest().body(error);
         }
     }
 }

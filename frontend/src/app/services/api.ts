@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
-import { PaymentRequest, PaymentResponse, StripeConfig } from '../models/payment.model';
 import { CheckoutRequest, CheckoutResponse } from '../models/checkout.model';
+import { PurchaseSession, PurchaseStats } from '../models/purchase.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,26 +27,6 @@ export class ApiService {
     return this.http.get<Product>(`${this.baseUrl}/products/${productId}`);
   }
 
-  /**
-   * Create a payment intent
-   */
-  createPaymentIntent(paymentRequest: PaymentRequest): Observable<PaymentResponse> {
-    return this.http.post<PaymentResponse>(`${this.baseUrl}/create-payment-intent`, paymentRequest);
-  }
-
-  /**
-   * Get payment status
-   */
-  getPaymentStatus(paymentIntentId: string): Observable<PaymentResponse> {
-    return this.http.get<PaymentResponse>(`${this.baseUrl}/payment-status/${paymentIntentId}`);
-  }
-
-  /**
-   * Get Stripe configuration
-   */
-  getStripeConfig(): Observable<StripeConfig> {
-    return this.http.get<StripeConfig>(`${this.baseUrl}/config`);
-  }
 
   /**
    * Create a Stripe Checkout session
@@ -60,5 +40,26 @@ export class ApiService {
    */
   getCheckoutSession(sessionId: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/checkout-session/${sessionId}`);
+  }
+
+  /**
+   * Get all purchase sessions (admin)
+   */
+  getAllSessions(): Observable<PurchaseSession[]> {
+    return this.http.get<PurchaseSession[]>(`${this.baseUrl}/purchases/sessions`);
+  }
+
+  /**
+   * Get sessions by customer email
+   */
+  getSessionsByCustomer(email: string): Observable<PurchaseSession[]> {
+    return this.http.get<PurchaseSession[]>(`${this.baseUrl}/purchases/sessions/customer/${email}`);
+  }
+
+  /**
+   * Get sessions by date range (admin)
+   */
+  getSessionsByDateRange(start: string, end: string): Observable<PurchaseSession[]> {
+    return this.http.get<PurchaseSession[]>(`${this.baseUrl}/purchases/sessions/date-range?start=${start}&end=${end}`);
   }
 }

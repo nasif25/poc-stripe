@@ -110,10 +110,10 @@ API_BASE_URL=http://localhost:8080
 
 ## 🎯 Demo Flow
 
-1. **Product Selection** - Choose user tier (50/100/200/300 users)
-2. **Payment Form** - Secure Stripe Elements integration
-3. **Payment Processing** - Real-time status updates
-4. **Confirmation** - Success/failure handling
+1. **Product Selection** - Choose user tier (50/100/200 users)
+2. **Stripe Checkout** - Secure hosted payment page
+3. **Payment Processing** - Stripe handles payment processing
+4. **Confirmation** - Success/failure redirects
 
 ## 🚀 Production Deployment
 
@@ -134,16 +134,14 @@ ng build --prod
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/products` | Get available products |
-| POST | `/api/create-payment-intent` | Create Stripe payment intent |
-| POST | `/api/webhook` | Stripe webhook handler |
-| GET | `/api/payment-status/{id}` | Check payment status |
+| POST | `/api/create-checkout-session` | Create Stripe checkout session |
+| GET | `/api/checkout-session/{id}` | Get checkout session details |
 
 ## 🔒 Security Features
 
 - Environment-based configuration
 - CORS protection
 - Input validation
-- Stripe webhook signature verification
 - Secure payment form (PCI compliant)
 
 ## 📝 Development Notes
