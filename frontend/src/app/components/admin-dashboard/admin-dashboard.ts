@@ -10,12 +10,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api';
 import { PurchaseSession } from '../../models/purchase.model';
 
 @Component({
   selector: 'app-admin-dashboard',
+  standalone: true,
   imports: [
     CommonModule,
     MatCardModule,
@@ -28,6 +30,7 @@ import { PurchaseSession } from '../../models/purchase.model';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
+    MatTooltipModule,
     FormsModule
   ],
   templateUrl: './admin-dashboard.html',
@@ -37,8 +40,8 @@ export class AdminDashboardComponent implements OnInit {
   sessions: PurchaseSession[] = [];
   loading = false;
   displayedColumns: string[] = ['date', 'customer', 'amount', 'status', 'paymentStatus', 'actions'];
-  startDate: string = '';
-  endDate: string = '';
+  startDate: Date | null = null;
+  endDate: Date | null = null;
   totalRevenue: number = 0;
   totalSessions: number = 0;
 
@@ -74,7 +77,12 @@ export class AdminDashboardComponent implements OnInit {
   filterByDateRange(): void {
     if (this.startDate && this.endDate) {
       this.loading = true;
-      this.apiService.getSessionsByDateRange(this.startDate, this.endDate).subscribe({
+      
+      // Format dates as YYYY-MM-DD
+      const startStr = this.formatDateForAPI(this.startDate);
+      const endStr = this.formatDateForAPI(this.endDate);
+      
+      this.apiService.getSessionsByDateRange(startStr, endStr).subscribe({
         next: (sessions) => {
           this.sessions = sessions;
           this.calculateStats();
@@ -100,8 +108,8 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   clearFilters(): void {
-    this.startDate = '';
-    this.endDate = '';
+    this.startDate = null;
+    this.endDate = null;
     this.loadAllSessions();
   }
 
@@ -113,7 +121,18 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   formatDate(timestamp: number): string {
-    return new Date(timestamp * 1000).toLocaleDateString();
+    return new Date(timestamp * 1000).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  }
+
+  formatDateForAPI(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   formatAmount(amount: number, currency: string): string {
@@ -147,7 +166,6 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   viewDetails(sessionId: string): void {
-    console.log('View details for session:', sessionId);
     this.snackBar.open(`Viewing details for session: ${sessionId}`, 'Close', {
       duration: 3000,
       horizontalPosition: 'center',
@@ -156,15 +174,22 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   exportData(): void {
-    // Simple CSV export functionality
-    const csvContent = this.generateCSV();
-    const blob = new Blob([csvContent], { type: 'text/csv' });
+    if (this.sessions.length === 0) return;
+
+    const csv = this.generateCSV();
+    const blob = new Blob([csv], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `purchase-data-${new Date().toISOString().split('T')[0]}.csv`;
+    link.download = `purchase-sessions-${new Date().toISOString().split('T')[0]}.csv`;
     link.click();
     window.URL.revokeObjectURL(url);
+
+    this.snackBar.open('CSV file downloaded successfully!', 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
+    });
   }
 
   private generateCSV(): string {

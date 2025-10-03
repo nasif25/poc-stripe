@@ -14,6 +14,7 @@ import { PurchaseSession } from '../../models/purchase.model';
 
 @Component({
   selector: 'app-purchase-history',
+  standalone: true,
   imports: [
     CommonModule,
     MatCardModule,

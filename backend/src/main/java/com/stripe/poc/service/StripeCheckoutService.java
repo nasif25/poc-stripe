@@ -74,7 +74,7 @@ public class StripeCheckoutService {
         Stripe.apiKey = stripeSecretKey;
         
         SessionListParams params = SessionListParams.builder()
-            .setLimit(100) // Adjust as needed
+            .setLimit(100L) // Adjust as needed
             .build();
             
         SessionCollection sessions = Session.list(params);
@@ -107,7 +107,7 @@ public class StripeCheckoutService {
         Stripe.apiKey = stripeSecretKey;
         
         SessionListParams params = SessionListParams.builder()
-            .setLimit(100)
+            .setLimit(100L)
             .build();
             
         SessionCollection sessions = Session.list(params);
@@ -143,7 +143,7 @@ public class StripeCheckoutService {
         Stripe.apiKey = stripeSecretKey;
         
         SessionListParams params = SessionListParams.builder()
-            .setLimit(100)
+            .setLimit(100L)
             .setCreated(SessionListParams.Created.builder()
                 .setGte(startDate)
                 .setLte(endDate)

@@ -53,3 +53,190 @@ body {
 .mat-mdc-card-actions {
   padding: 16px 24px 24px 24px !important;
 }
+
+/* Material Datepicker Overlay Fixes */
+.cdk-overlay-container {
+  z-index: 10000 !important;
+}
+
+.cdk-overlay-backdrop {
+  background: rgba(0, 0, 0, 0.32);
+}
+
+.cdk-overlay-pane {
+  z-index: 10001 !important;
+}
+
+.mat-datepicker-content {
+  background: white !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.mat-datepicker-content-container {
+  background: white !important;
+}
+
+.mat-calendar {
+  font-family: 'Inter', sans-serif !important;
+  background: white !important;
+}
+
+.mat-calendar-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  padding: 16px 8px !important;
+}
+
+.mat-calendar-controls {
+  margin: 0 !important;
+}
+
+.mat-calendar-period-button,
+.mat-calendar-arrow {
+  color: white !important;
+}
+
+.mat-calendar-table-header {
+  color: #667eea !important;
+  font-weight: 600 !important;
+  background: white !important;
+}
+
+.mat-calendar-table-header th {
+  color: #667eea !important;
+  font-weight: 600 !important;
+  padding: 8px 0 !important;
+}
+
+.mat-calendar-body {
+  background: white !important;
+}
+
+.mat-calendar-body-label {
+  font-weight: 600 !important;
+  color: #495057 !important;
+  opacity: 1 !important;
+}
+
+.mat-calendar-body-cell {
+  background: white !important;
+}
+
+.mat-calendar-body-cell-content {
+  background: white !important;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  color: #333 !important;
+}
+
+.mat-calendar-body-selected {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.mat-calendar-body-selected .mat-calendar-body-cell-content {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.mat-calendar-body-in-range::before {
+  background: rgba(102, 126, 234, 0.2) !important;
+}
+
+.mat-calendar-body-today:not(.mat-calendar-body-selected) .mat-calendar-body-cell-content {
+  border: 2px solid #667eea !important;
+  font-weight: 600 !important;
+  background: white !important;
+  color: #667eea !important;
+}
+
+.mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
+  background-color: rgba(102, 126, 234, 0.1) !important;
+}
+
+.mat-calendar-body-disabled > .mat-calendar-body-cell-content {
+  color: #ccc !important;
+}
+
+.mat-calendar-body-cell-content.mat-focus-indicator {
+  background: white !important;
+}
+
+/* Material Form Field Improvements */
+.mat-mdc-form-field {
+  font-family: 'Inter', sans-serif !important;
+}
+
+.mat-mdc-form-field-focus-overlay {
+  background-color: rgba(102, 126, 234, 0.05) !important;
+}
+
+.mat-mdc-text-field-wrapper {
+  background: white !important;
+}
+
+/* Material Datepicker Toggle Button */
+.mat-datepicker-toggle {
+  color: #667eea !important;
+}
+
+.mat-datepicker-toggle-active {
+  color: #764ba2 !important;
+}
+
+/* Material Table Enhancements */
+.mat-mdc-table {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.mat-mdc-header-row {
+  background: #f8f9fa;
+}
+
+.mat-mdc-row:hover {
+  background: #f8f9fa;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #764ba2;
+}
+
+/* Additional Calendar Month View Fixes */
+.mat-calendar-body-in-preview {
+  color: rgba(102, 126, 234, 0.5) !important;
+}
+
+.mat-calendar-body-comparison-identical,
+.mat-calendar-body-in-comparison-range::before {
+  background: rgba(102, 126, 234, 0.2) !important;
+}
+
+/* Ensure all calendar backgrounds are white */
+.mat-calendar-content {
+  background: white !important;
+}
+
+.mat-calendar-table {
+  background: white !important;
+}
